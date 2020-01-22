@@ -1,9 +1,11 @@
 import React from 'react';
-import { render } from '@testing-library/react';
-import App from './App';
+import {shallow} from 'enzyme';
+import App from './';
+import {AppConst} from '../../constants/App.const';
 
-test('renders learn react link', () => {
-  const { getByText } = render(<App />);
-  const linkElement = getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+describe("<App/> component", () => {
+  let wrapper = shallow(<App/>);
+  it("The application should have the correct title", () => {
+    expect(wrapper.find("header h2").text()).toEqual(AppConst.TITLE);
+  });
 });
