@@ -8,9 +8,11 @@ class Game extends React.Component {
             <div className="game">
                 <div className="player">
                     <h4>{AppConst.PLAYER_1}</h4>
+                    <button>{AppConst.WIN_THE_BALL}</button>
                 </div>
                 <div className="player">
                     <h4>{AppConst.PLAYER_2}</h4>
+                    <button>{AppConst.WIN_THE_BALL}</button>
                 </div>
             </div>
         );
