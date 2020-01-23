@@ -5,9 +5,10 @@ import './Game.css';
 class Game extends React.Component {
     constructor(props){
         super(props);
+        const defaultScore = AppConst.POINTS[0];
         this.state = {
-            player1_score: AppConst.DEFAULT_SCORE,
-            player2_score: AppConst.DEFAULT_SCORE,           
+            player1_score: defaultScore,
+            player2_score: defaultScore,           
         }
         this.player1_wins = 0;
         this.player2_wins = 0;
