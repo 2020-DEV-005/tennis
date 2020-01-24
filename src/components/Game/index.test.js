@@ -36,5 +36,12 @@ describe("<Game /> component", () => {
         expect(wrapper.find(".player-2 .score").text()).toEqual("15");
 
     });
+
+    it("Player should win if his score is 40 and win the ball", () => {
+        let player1WinButton = wrapper.find("div.player-1 button");
+        wrapper.instance().player1_wins = 3;
+        player1WinButton.simulate("click");
+        expect(wrapper.find(".game-over").text()).toEqual(AppConst.PLAYER_1 + " " + AppConst.WON_THE_GAME);
+    });
     
 });
