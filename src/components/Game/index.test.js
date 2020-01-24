@@ -4,12 +4,18 @@ import Game from './';
 import {AppConst} from '../../constants/App.const';
 
 describe("<Game /> component", () => {
-    let wrapper = shallow(<Game />);
+    let wrapper;
+    let instance;
+    beforeEach(() => {
+        wrapper = shallow(<Game />);
+        instance = wrapper.instance();
+    });
+
     it("Should have label for each player", () => {
         let playerList = wrapper.find("div.player h4");
         expect(playerList.length).toEqual(2);
-        expect(playerList.at(0).text()).toEqual(AppConst.PLAYER_1);
-        expect(playerList.at(1).text()).toEqual(AppConst.PLAYER_2);
+        expect(playerList.at(0).text()).toEqual(AppConst.PLAYER_1_NAME);
+        expect(playerList.at(1).text()).toEqual(AppConst.PLAYER_2_NAME);
     });
 
     it("Should have 'Win the ball' button for each player", () => {
@@ -39,9 +45,14 @@ describe("<Game /> component", () => {
 
     it("Player should win if his score is 40 and win the ball", () => {
         let player1WinButton = wrapper.find("div.player-1 button");
-        wrapper.instance().player1_wins = 3;
+        wrapper.setState({
+            player1: {
+                ...wrapper.state,
+                wins:3
+            }
+        });
         player1WinButton.simulate("click");
-        expect(wrapper.find(".game-over").text()).toEqual(AppConst.PLAYER_1 + " " + AppConst.WON_THE_GAME);
+        expect(wrapper.find(".game-over").text()).toEqual(AppConst.PLAYER_1_NAME + " " + AppConst.WON_THE_GAME);
     });
     
     it("Buttons should be disabled after the game is over", () => {
@@ -52,4 +63,5 @@ describe("<Game /> component", () => {
         expect(buttons.at(0).is('[disabled]')).toBeTruthy();
         expect(buttons.at(1).is('[disabled]')).toBeTruthy();
     });
+
 });

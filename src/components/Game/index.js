@@ -7,39 +7,35 @@ class Game extends React.Component {
         super(props);
         const defaultScore = AppConst.POINTS[0];
         this.state = {
-            player1_score: defaultScore,
-            player2_score: defaultScore,
+            player1: {
+                score: defaultScore,
+                wins: 0
+            },
+            player2: {
+                score: defaultScore,
+                wins: 0
+            },
+            isDeuce: false,
             gameOver: false,
             winner: null    
         }
-        this.player1_wins = 0;
-        this.player2_wins = 0;
     }
     
-    _updateScore = (player) => {
-        let scoreObj = {};
-        if(player === AppConst.PLAYER_1) {
-            if(this.player1_wins < AppConst.POINTS.length-1) {
-                scoreObj.player1_score = AppConst.POINTS[++this.player1_wins];
-            }    
-            else {
-                scoreObj = {
-                    winner: AppConst.PLAYER_1,
-                    gameOver: true
-                };
-            }
-        } else {
-            if(this.player2_wins < AppConst.POINTS.length-1) {
-                scoreObj.player2_score = AppConst.POINTS[++this.player2_wins];
-            }    
-            else {
-                scoreObj = {
-                    winner: AppConst.PLAYER_2,
-                    gameOver: true
-                };
-            }
+    _updateScore = (ballWinner, otherPlayer) => {
+        let ballWinnerObj = this.state[ballWinner];
+        let otherPlayerObj = this.state[otherPlayer];
+        let otherProps = {};
+        if(ballWinnerObj.wins < AppConst.POINTS.length-1) {
+            ballWinnerObj.score = AppConst.POINTS[++ballWinnerObj.wins];
         }
-        this.setState(scoreObj);
+        else {
+            otherProps = {
+                winner: ballWinner === AppConst.PLAYER1 ? AppConst.PLAYER_1_NAME : AppConst.PLAYER_2_NAME,
+                gameOver: true
+            };
+        }
+        
+        this.setState({[ballWinner]: ballWinnerObj, ...otherProps});
     }
 
     render = () => {
@@ -47,17 +43,17 @@ class Game extends React.Component {
             <div>
                 <div className="game">
                     <div className="player player-1">
-                        <h4>{AppConst.PLAYER_1}</h4>
-                        <div className="score-container">{AppConst.SCORE} : <span className="score">{this.state.player1_score}</span></div>
-                        <button onClick={this._updateScore.bind(this, AppConst.PLAYER_1)}
+                        <h4>{AppConst.PLAYER_1_NAME}</h4>
+                        <div className="score-container">{AppConst.SCORE} : <span className="score">{this.state.player1.score}</span></div>
+                        <button onClick={this._updateScore.bind(this, AppConst.PLAYER1, AppConst.PLAYER2)}
                                 disabled={this.state.gameOver}>
                             {AppConst.WIN_THE_BALL}
                         </button>
                     </div>
                     <div className="player player-2">
-                        <h4>{AppConst.PLAYER_2}</h4>
-                        <div className="score-container">{AppConst.SCORE} : <span className="score">{this.state.player2_score}</span></div>
-                        <button onClick={this._updateScore.bind(this, AppConst.PLAYER_2)}
+                        <h4>{AppConst.PLAYER_2_NAME}</h4>
+                        <div className="score-container">{AppConst.SCORE} : <span className="score">{this.state.player2.score}</span></div>
+                        <button onClick={this._updateScore.bind(this, AppConst.PLAYER2, AppConst.PLAYER1)}
                                 disabled={this.state.gameOver}>
                             {AppConst.WIN_THE_BALL}
                         </button>
