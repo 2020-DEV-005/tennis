@@ -27,6 +27,9 @@ class Game extends React.Component {
         let otherProps = {};
         if(ballWinnerObj.wins < AppConst.POINTS.length-1) {
             ballWinnerObj.score = AppConst.POINTS[++ballWinnerObj.wins];
+            if(this._checkForDeuce(ballWinnerObj.wins, otherPlayerObj.wins)){
+                ballWinnerObj.score = otherPlayerObj.score = AppConst.DEUCE;
+            }
         }
         else {
             otherProps = {
@@ -35,7 +38,11 @@ class Game extends React.Component {
             };
         }
         
-        this.setState({[ballWinner]: ballWinnerObj, ...otherProps});
+        this.setState({[ballWinner]: ballWinnerObj, [otherPlayer]: otherPlayerObj, ...otherProps});
+    }
+    
+    _checkForDeuce = (currentBallWinnnerWins, otherPlayerWins) => {
+        return currentBallWinnnerWins >2 && otherPlayerWins > 2;
     }
 
     render = () => {

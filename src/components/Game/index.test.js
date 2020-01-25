@@ -64,4 +64,22 @@ describe("<Game /> component", () => {
         expect(buttons.at(1).is('[disabled]')).toBeTruthy();
     });
 
+    it("Score should be Deuce if both players win 3 balls", () => {
+        wrapper.setState({
+            player1: {
+                ...wrapper.state.player1,
+                wins: 3
+            },
+            player2:{
+                ...wrapper.state.player2,
+                wins: 2
+            }
+        });
+
+        let player2WinButton = wrapper.find("div.player-2 button");
+        player2WinButton.simulate("click");
+        expect(wrapper.find(".player-1 .score").text()).toEqual(AppConst.DEUCE);
+        expect(wrapper.find(".player-2 .score").text()).toEqual(AppConst.DEUCE);
+    });
+
 });
