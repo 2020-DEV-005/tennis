@@ -101,4 +101,23 @@ describe("<Game /> component", () => {
 
     });
 
+    it("Both the players score will be deuce if ball winner score is 40 and other player score is Advantage", () => {
+        wrapper.setState({
+            player1: {
+                score: AppConst.ADVANTAGE,
+                wins: 3
+            },
+            player2:{
+                score: AppConst.POINTS[AppConst.POINTS.length-1],
+                wins: 3
+            }
+        });
+
+        let player2WinButton = wrapper.find("div.player-2 button");
+        player2WinButton.simulate("click");
+        expect(wrapper.find(".player-1 .score").text()).toEqual(AppConst.DEUCE);
+        expect(wrapper.find(".player-2 .score").text()).toEqual(AppConst.DEUCE);
+       
+    });
+
 });
