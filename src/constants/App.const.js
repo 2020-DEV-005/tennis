@@ -8,5 +8,6 @@ export const AppConst = {
     SCORE: "Score",
     POINTS: [0, 15, 30, 40],
     WON_THE_GAME: "won the game",
-    DEUCE: "Deuce"
+    DEUCE: "Deuce",
+    ADVANTAGE: "A"
 };
